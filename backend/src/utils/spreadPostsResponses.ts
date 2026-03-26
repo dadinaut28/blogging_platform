@@ -1,19 +1,19 @@
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../lib/prisma";
 
 interface Response {
   id: number;
   userId: number;
   postId: number;
   parentId: null | number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  replies: Response[];
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
+  replies?: Response[];
 }
 
 export async function getAllOnePostResponses(postId: number) {
-  async function getReplies(responses) {
+  async function getReplies(responses: Response[]) {
     return await Promise.all(
-      responses.map(async (response) => {
+      responses.map(async (response): Promise<Response> => {
         const replies = await prisma.response.findMany({
           where: {
             parentId: response.id,
@@ -47,6 +47,7 @@ export async function getAllOnePostResponses(postId: number) {
   }
 
   try {
+    // Get parent responses
     const responses = await prisma.response.findMany({
       where: {
         postId,

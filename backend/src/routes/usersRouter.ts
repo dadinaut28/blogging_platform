@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getConnectedUser, getUser } from "../controllers/usersController";
-import { checkToken } from "../middlewares/checkToken";
+import { getConnectedUser, getUser } from "../controllers/usersController.js";
+import { checkToken } from "../middlewares/checkToken.js";
 
 export const usersRouter = Router();
 

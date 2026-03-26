@@ -1,7 +1,7 @@
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../lib/prisma";
 import type { Request, Response } from "express";
-import { getAllOnePostResponses } from "../utils/spreadPostsResponses";
-import { uploadToCloudinary } from "../utils/cloudinaryUpload";
+import { getAllOnePostResponses } from "../utils/spreadPostsResponses.js";
+import { uploadToCloudinary } from "../utils/cloudinaryUpload.js";
 
 export async function getPosts(req: Request, res: Response) {
   try {

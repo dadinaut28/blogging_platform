@@ -2,13 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import { authRouter } from "./routes/authRouter";
-import { prisma } from "../lib/prisma";
-import { postRouter } from "./routes/postsRouter";
-import { usersRouter } from "./routes/usersRouter";
-import { verifyToken } from "./controllers/verifyToken";
-import { teamChoicePostsRouter } from "./routes/teamChoicePostsRouter";
-import { categoryRouter } from "./routes/categoryRouter";
+import { authRouter } from "./routes/authRouter.js";
+import { prisma } from "./lib/prisma.js";
+import { postRouter } from "./routes/postsRouter.js";
+import { usersRouter } from "./routes/usersRouter.js";
+import { verifyToken } from "./controllers/verifyToken.js";
+import { teamChoicePostsRouter } from "./routes/teamChoicePostsRouter.js";
+import { categoryRouter } from "./routes/categoryRouter.js";
 
 dotenv.config();
 

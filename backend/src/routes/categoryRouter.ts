@@ -5,9 +5,9 @@ import {
   getCategory,
   patchCategory,
   postCategory,
-} from "../controllers/categoryController";
-import { checkToken } from "../middlewares/checkToken";
-import { isAdmin } from "../middlewares/isAdmin";
+} from "../controllers/categoryController.js";
+import { checkToken } from "../middlewares/checkToken.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
 
 export const categoryRouter = Router();
 

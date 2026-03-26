@@ -4,9 +4,9 @@ import {
   getTeamChoicePost,
   getTeamChoicePosts,
   postTeamChoicePosts,
-} from "../controllers/teamChoicePostsController";
-import { isAdmin } from "../middlewares/isAdmin";
-import { checkToken } from "../middlewares/checkToken";
+} from "../controllers/teamChoicePostsController.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
+import { checkToken } from "../middlewares/checkToken.js";
 
 export const teamChoicePostsRouter = Router();
 

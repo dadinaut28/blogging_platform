@@ -9,9 +9,9 @@ import {
   patchPostResponse,
   postPosts,
   postPostsResponses,
-} from "../controllers/postsController";
-import { checkToken } from "../middlewares/checkToken";
-import upload from "../middlewares/upload";
+} from "../controllers/postsController.js";
+import { checkToken } from "../middlewares/checkToken.js";
+import upload from "../middlewares/upload.js";
 
 export const postRouter = Router();
 
