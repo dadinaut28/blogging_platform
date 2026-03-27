@@ -46,9 +46,15 @@ body {
 
 @media screen and (min-width: 650px) {
   .blog-post-row {
-    width: 400px;
+    width: 480px;
   }
 }
+
+/* @media screen and (min-width: 1150px) {
+  .blog-post-row {
+    width: 700px;
+  }
+} */
 
 @custom-variant dark (&:is(.dark *));
 

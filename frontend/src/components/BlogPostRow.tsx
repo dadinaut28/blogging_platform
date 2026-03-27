@@ -73,7 +73,7 @@ export function BlogPostRow({ post, onPostDeletion, connectedUser }: Props) {
           </h3>
         </button>
       </div>
-      <div className="flex mt-2.5  ">
+      <div className="flex mt-2.5  gap-2">
         <div className="overflow-hidden w-2/3">
           <h2
             onClick={() => navigate(`/posts/${post.id}`)}
