@@ -84,7 +84,7 @@ export function Post() {
         onCommentButtonClick={() => setShowResponseSideBar(true)}
         commentsNumber={post?.responses.length}
       />
-      <div className="my-12 h-125 overflow-hidden">
+      <div className="my-12 h-80 md:h-125 overflow-hidden">
         <img
           className="object-center object-cover w-full"
           src={post?.coverImageUrl}

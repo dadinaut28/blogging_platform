@@ -85,7 +85,6 @@ export function ResponseRow({
   const updateFormRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
-    console.log("Soleil");
     const mouseDownListener = (e: MouseEvent) => {
       console.log(updateFormRef.current);
       console.log(showResponseUpdateForm);
@@ -107,7 +106,7 @@ export function ResponseRow({
         updatedResponse,
       );
       if (status === 200) {
-        await onNewResponseChange();
+        onNewResponseChange();
         setShowResponseForm(false);
       } else if (status === 500) {
         setShowServerErrorMessage(true);

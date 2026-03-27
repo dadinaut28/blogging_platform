@@ -22,6 +22,7 @@ export function Login() {
       if (!result) return;
       const [status, token] = result;
       if (status === 200) {
+        console.log("Token from login: ", token);
         localStorage.setItem("dadinaut_blogging_platform_auth_token", token);
         setShowLoginSuccessMessage(true);
         setTimeout(() => {

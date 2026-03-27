@@ -61,7 +61,7 @@ export function NewPostNavBar({
           setShowPostCreationSuccessMessage(true);
           setTimeout(() => setShowPostCreationSuccessMessage(false), 2500);
           onPostCreationSuccess();
-        } else if (status === 400) {
+        } else if (status >= 400 && status < 500) {
           setShowInputErrorMessage(true);
           setTimeout(() => setShowInputErrorMessage(false), 2500);
         } else if (status === 500) {

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { getConnectedUser } from "../queries";
 import { Link, Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import userIcon from "../assets/user-icon.svg";
-import { isUserConnected } from "../lib/IsUserConnected";
 import type { contextType } from "../App";
 import type { User } from "../types";
+import { isUserConnected } from "../lib/IsUserConnected";
 
 export interface profileContextType {
   user: User;
@@ -13,7 +13,7 @@ export interface profileContextType {
 export function Profile() {
   const [user, setUser] = useState<User>();
   const navigate = useNavigate();
-  const { onLargeScreen, onSmallScreen, onPageTransition } =
+  const { onLargeScreen, onSmallScreen, onPageTransition, connectedUser } =
     useOutletContext<contextType>();
 
   useEffect(() => {
@@ -21,9 +21,7 @@ export function Profile() {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      await isUserConnected(navigate);
-    })();
+    isUserConnected(navigate);
   }, [navigate]);
 
   useEffect(() => {
@@ -37,10 +35,9 @@ export function Profile() {
     <div className={`flex ${onLargeScreen ? "ml-60" : "ml-0"} w-full`}>
       <div
         style={{
-          borderLeft: "1px solid lightgray",
           minHeight: "calc(100vh - 56px)",
         }}
-        className={`${onSmallScreen ? "w-full" : "w-2/3"} px-8 pt-10`}
+        className={`${onSmallScreen ? "w-full" : "w-2/3"} px-8 pt-10 border-l border-gray-100`}
       >
         <h2 className="text-4xl font-semibold">
           {user?.firstname} {user?.lastname}
@@ -56,13 +53,10 @@ export function Profile() {
             A propos
           </Link>
         </div>
-        <Outlet context={{ user }} />
+        <Outlet context={{ user, connectedUser }} />
       </div>
       {!onSmallScreen && (
-        <div
-          style={{ borderLeft: "1px solid lightgray" }}
-          className="w-1/3 pt-10 px-8"
-        >
+        <div className="w-1/3 pt-10 px-8 border-l border-gray-100">
           <div>
             <div className="w-30 h-30 rounded-[100%] overflow-hidden">
               <img

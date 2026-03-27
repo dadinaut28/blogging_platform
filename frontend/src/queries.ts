@@ -66,8 +66,7 @@ export async function createNewPost(
       },
       body,
     });
-    const data = await response.json();
-    console.log(data.message);
+    // const data = await response.json();
 
     return response.status;
   } catch (err) {
@@ -137,15 +136,19 @@ export async function createNewResponse(
   }
 }
 
-export async function getConnectedUser() {
+export async function getConnectedUser(token: string | null) {
   try {
     const response = await fetch(`${apiUrl}/api/users/me`, {
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
     });
-    const data = await response.json();
-    return data.user;
+    if (response.status === 200) {
+      const data = await response.json();
+      return data.user;
+    } else {
+      return null;
+    }
   } catch (err) {
     console.log(err);
   }
@@ -301,6 +304,20 @@ export async function registerUser(
       firstname,
       lastname,
       password,
+    }),
+  });
+
+  return response.status;
+}
+
+export async function verifyToken(token: string) {
+  const response = await fetch(`${apiUrl}/api/verify-token`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      token,
     }),
   });
 

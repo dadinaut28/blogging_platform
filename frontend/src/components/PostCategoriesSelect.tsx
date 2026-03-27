@@ -5,10 +5,13 @@ import type { Category } from "../types";
 
 interface Props {
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  changeCategoryId: (newCategoryId: number) => void;
 }
 
-export function PostCategoriesSelect({ onChange }: Props) {
+export function PostCategoriesSelect({ onChange, changeCategoryId }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
+  // First element in categories array
+  const [firstCategory, setFirstCategory] = useState<Category>();
 
   useEffect(() => {
     (async () => {
@@ -17,7 +20,11 @@ export function PostCategoriesSelect({ onChange }: Props) {
       if (!result) return;
 
       const [status, categories] = result;
-      if (status === 200) setCategories(categories);
+      if (status === 200) {
+        setCategories(categories);
+        setFirstCategory(categories[0]);
+        changeCategoryId(categories[0].id);
+      }
     })();
   }, []);
 
@@ -26,14 +33,18 @@ export function PostCategoriesSelect({ onChange }: Props) {
       <span className="text-lg font-medium mb-2">Catégorie:</span>
       <br />
       <select
+        value={firstCategory?.id}
         className="mb-7"
         onChange={onChange}
+        onLoad={onChange}
         name="categories"
         id="categories"
       >
         {categories.map((category) => {
           return (
-            <option value={category.id}>{capitalize(category.name)}</option>
+            <option key={category.id} value={category.id}>
+              {capitalize(category.name)}
+            </option>
           );
         })}
       </select>

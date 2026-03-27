@@ -1,8 +1,8 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import { NewPostForm } from "../components/NewPostForm";
 import { NewPostNavBar } from "../components/NewPostNavBar";
-import { useNavigate } from "react-router-dom";
 import { isUserConnected } from "../lib/IsUserConnected";
+import { useNavigate } from "react-router-dom";
 
 export function NewPost() {
   const [title, setTitle] = useState("");
@@ -25,6 +25,10 @@ export function NewPost() {
     setContent("");
     setReadingTime(0);
     setCoverImage(undefined);
+  };
+
+  const changeCategoryId = (newCategoryId: number) => {
+    setCategoryId(newCategoryId);
   };
 
   return (
@@ -67,6 +71,7 @@ export function NewPost() {
           onSelectChange={(e) => {
             setCategoryId(Number(e.target.value));
           }}
+          changeCategoryId={changeCategoryId}
         />
       </div>
     </div>

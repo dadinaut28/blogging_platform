@@ -12,16 +12,18 @@ import { Textarea } from "../components/ui/textarea";
 import { isUserConnected } from "../lib/IsUserConnected";
 
 export function EditPost() {
+  // Get if the page has already been rendered to refresh data
   const hasAlreadyBeenRendered = useRef(false);
   const { id } = useParams();
   const { revalidate } = useRevalidator();
   const navigate = useNavigate();
 
+  // Redirect to login page if user is not connected
   useEffect(() => {
     isUserConnected(navigate);
   }, [navigate]);
 
-  // Revalidate data if the page has already beeb rendered to get updated data (connectedUser and post)
+  // Revalidate data if the page has already been rendered to get updated data (connectedUser and post)
   useEffect(() => {
     if (hasAlreadyBeenRendered.current === true) revalidate();
   }, [revalidate]);
@@ -34,6 +36,10 @@ export function EditPost() {
   const [newReadingTime, setNewReadingTime] = useState("");
   const [newPublished, setNewPublished] = useState(false);
   const [newCoverImage, setNewCoverImage] = useState<File | undefined>();
+  const [loading, setLoading] = useState(false);
+  const [showPostUpdateSuccessMessage, setShowPostUpdateSuccessMessage] =
+    useState(false);
+  const [showServerErrorMessage, setShowServerErrorMessage] = useState(false);
 
   useEffect(() => {
     if (!post) return;
@@ -51,7 +57,6 @@ export function EditPost() {
     if (!id || !connectedUser || !post) return;
 
     if (connectedUser?.id !== post?.authorId) {
-      console.log("User is different from post author", `/posts/${post.id}`);
       navigate(`/posts/${id}`);
     }
   }, [connectedUser, post, id, navigate]);
@@ -59,34 +64,51 @@ export function EditPost() {
   const handleFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
-      if (
-        newTitle &&
-        newSubTitle &&
-        newContent &&
-        newReadingTime &&
-        newPublished !== undefined
-      ) {
-        const status = await updatePost(
-          post?.id,
-          newTitle,
-          newSubTitle,
-          newContent,
-          Number(newReadingTime),
-          newPublished,
-          newCoverImage,
-        );
+      setLoading(true);
+      const status = await updatePost(
+        post?.id,
+        newTitle,
+        newSubTitle,
+        newContent,
+        Number(newReadingTime),
+        newPublished,
+        newCoverImage,
+      );
 
-        if (status === 404) {
-          throw new Response("Not Found", { status: 404 });
-        }
+      if (status === 200) {
+        setShowPostUpdateSuccessMessage(true);
+        setTimeout(() => setShowPostUpdateSuccessMessage(false), 2500);
+      } else if (status === 500) {
+        setShowServerErrorMessage(true);
+        setTimeout(() => setShowServerErrorMessage(false), 2500);
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const updateButtonDisabled =
+    !newTitle ||
+    !newSubTitle ||
+    !newContent ||
+    !newReadingTime ||
+    newPublished === undefined ||
+    loading;
+
   return (
     <div>
+      {showServerErrorMessage && (
+        <div className="fixed top-18 right-10 px-2.5 py-1 rounded-sm border border-red-200 bg-red-50 text-red-500 font-medium text-sm">
+          <p>Erreur interne: réessayez plus tard.</p>
+        </div>
+      )}
+      {showPostUpdateSuccessMessage && (
+        <div className="fixed top-18 right-10 px-2.5 py-1 rounded-sm border border-blue-200 bg-blue-50 text-blue-500 font-medium text-sm">
+          <p>Le poste a bien été mis à jour.</p>
+        </div>
+      )}
       <nav className="fixed px-5 flex items-center top-0 left-0 right-0 h-14 border border-gray-300 bg-white">
         <Button
           className="bg-transparent text-black"
@@ -151,7 +173,9 @@ export function EditPost() {
             />
           </label>
           <br />
-          <Button className="mt-5">Mettre à jour</Button>
+          <Button disabled={updateButtonDisabled} className="mt-5">
+            Mettre à jour
+          </Button>
         </form>
       </div>
     </div>

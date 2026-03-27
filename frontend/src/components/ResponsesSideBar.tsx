@@ -46,7 +46,7 @@ export function ResponsesSideBar({
   };
 
   return (
-    <div className="fixed top-0 right-0 bottom-0 w-1/3 p-5 z-50 bg-gray-50">
+    <div className="fixed top-0 right-0 bottom-0 w-2/3 sm:w-1/3 p-5 z-50 bg-gray-50">
       {showServerErrorMessage && (
         <div className="fixed right-10 top-22 flex items-center px-2.5 h-8 rounded-md text-sm text-gray-500 font-medium bg-gray-100 border border-gray-200">
           <p>Erreur interne: réessayez plus tard !</p>
@@ -69,8 +69,8 @@ export function ResponsesSideBar({
         />
         {showFormButtons && (
           <div className="mt-2.5 relative">
-            <div className="absolute flex gap-3 right-3">
-              <Button onClick={() => setShowFormButtons(false)}>Fermer</Button>
+            <div className="absolute flex text-sm gap-1 md:gap-3 right-3">
+              <Button onClick={() => setShowFormButtons(false)}>Annuler</Button>
               <Button
                 className="ml-2"
                 disabled={response.length === 0 || loading}

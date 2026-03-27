@@ -1,18 +1,17 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import ellipsisIcon from "../assets/three_dots_icon.svg";
 import { useState } from "react";
 import { deleteOnePost } from "../queries";
 import { createPortal } from "react-dom";
-import type { BlogPost } from "../types";
-import type { contextType } from "../App";
-
+import type { BlogPost, User } from "../types";
 interface Props {
   post: BlogPost;
   onPostDeletion: () => void;
+  connectedUser: User;
 }
 
-export function BlogPostRow({ post, onPostDeletion }: Props) {
+export function BlogPostRow({ post, onPostDeletion, connectedUser }: Props) {
   const navigate = useNavigate();
 
   const date = new Date(post.createdAt);
@@ -23,7 +22,6 @@ export function BlogPostRow({ post, onPostDeletion }: Props) {
     year: "numeric",
   });
 
-  const { connectedUser } = useOutletContext<contextType>();
   const [showServerErrorMessage, setShowServerErrorMessage] = useState(false);
   const [showOptionsBox, setShowOptionsBox] = useState(false);
   const [showPostDeletionConfirmationBox, setShowPostDeletionConfirmationBox] =
@@ -110,7 +108,10 @@ export function BlogPostRow({ post, onPostDeletion }: Props) {
           </Button>
         </div>
         <Button
-          onClick={() => setShowOptionsBox((v) => !v)}
+          onClick={() => {
+            setShowOptionsBox((v) => !v);
+            console.log(connectedUser?.id, post.author.id);
+          }}
           className="bg-transparent"
         >
           <img src={ellipsisIcon} alt="Icone ellipsis" />

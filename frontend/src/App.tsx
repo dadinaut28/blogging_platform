@@ -3,7 +3,7 @@ import "./App.css";
 import { NavBar } from "./components/NavBar";
 import { SideBar } from "./components/SideBar";
 import { useEffect, useRef, useState } from "react";
-import { getConnectedUser } from "./queries";
+import { getConnectedUser, verifyToken } from "./queries";
 import type { User } from "./types";
 
 export interface contextType {
@@ -12,9 +12,12 @@ export interface contextType {
   onLargeScreen: boolean;
   onPageTransition: () => void;
   onSmallScreen: boolean;
+  isUserConnected: boolean;
+  handleUserLogout: () => void;
 }
 
 function App() {
+  const [isUserConnected, setIsUserConnected] = useState(false);
   const [connectedUser, setConnectedUser] = useState();
   const appRef = useRef<null | HTMLDivElement>(null);
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -27,8 +30,34 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const user = await getConnectedUser();
+      const user = await getConnectedUser(
+        localStorage.getItem("dadinaut_blogging_platform_auth_token"),
+      );
       setConnectedUser(user);
+    })();
+  }, []);
+
+  const handleUserLogout = async () => {
+    setIsUserConnected(false);
+    const user = await getConnectedUser(
+      localStorage.getItem("dadinaut_blogging_platform_auth_token"),
+    );
+    setConnectedUser(user);
+  };
+
+  useEffect(() => {
+    (async () => {
+      const token = localStorage.getItem(
+        "dadinaut_blogging_platform_auth_token",
+      );
+      if (!token) return setIsUserConnected(false);
+      const status = await verifyToken(token);
+
+      if (status === 200) {
+        setIsUserConnected(true);
+      } else {
+        setIsUserConnected(false);
+      }
     })();
   }, []);
 
@@ -41,7 +70,6 @@ function App() {
         if (onLargeScreen) setHideSideBar(true);
         setOnLargeScreen(false);
       }
-      console.log("On small screen: ", onSmallScreen);
       if (entry.contentRect.width < 855) {
         setOnSmallScreen(true);
       } else if (entry.contentRect.width > 855) {
@@ -59,7 +87,6 @@ function App() {
 
   const handleHamburgerClick = () => {
     setHideSideBar((v) => {
-      console.log(v);
       return !v;
     });
   };
@@ -72,7 +99,11 @@ function App() {
         onSmallScreen={onSmallScreen}
       />
       <div className="flex mt-14">
-        <SideBar onLargeScreen={onLargeScreen} hideSideBar={hideSideBar} />
+        <SideBar
+          onUserLogout={handleUserLogout}
+          onLargeScreen={onLargeScreen}
+          hideSideBar={hideSideBar}
+        />
         <Outlet
           context={{
             connectedUser,
@@ -80,6 +111,8 @@ function App() {
             onLargeScreen,
             onPageTransition,
             onSmallScreen,
+            isUserConnected,
+            handleUserLogout,
           }}
         />
       </div>

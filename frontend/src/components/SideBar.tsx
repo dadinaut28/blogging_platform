@@ -1,21 +1,26 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 
 interface Props {
   hideSideBar: boolean;
   onLargeScreen: boolean;
+  onUserLogout: () => void;
 }
 
-export function SideBar({ hideSideBar, onLargeScreen }: Props) {
+export function SideBar({ hideSideBar, onLargeScreen, onUserLogout }: Props) {
   const [showLogoutSuccessMessage, setShowLogoutSuccessMessage] =
     useState(false);
+  const navigate = useNavigate();
 
   const handleLogoutButtonClick = () => {
     localStorage.removeItem("dadinaut_blogging_platform_auth_token");
     setShowLogoutSuccessMessage(true);
-
-    setTimeout(() => setShowLogoutSuccessMessage(false), 2500);
+    setTimeout(() => {
+      setShowLogoutSuccessMessage(false);
+      navigate("/login");
+      onUserLogout();
+    }, 2500);
   };
 
   return (

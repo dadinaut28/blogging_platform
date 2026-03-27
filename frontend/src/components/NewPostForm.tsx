@@ -17,6 +17,7 @@ interface Props {
   onReadingTimeChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onPublishedChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSelectChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  changeCategoryId: (newCategoryId: number) => void;
 }
 
 export function NewPostForm({
@@ -32,6 +33,7 @@ export function NewPostForm({
   onReadingTimeChange,
   onPublishedChange,
   onSelectChange,
+  changeCategoryId,
 }: Props) {
   return (
     <form className="">
@@ -76,7 +78,10 @@ export function NewPostForm({
         label="Temps de lecture"
         onChange={onReadingTimeChange}
       />
-      <PostCategoriesSelect onChange={onSelectChange} />
+      <PostCategoriesSelect
+        changeCategoryId={changeCategoryId}
+        onChange={onSelectChange}
+      />
       <label
         className="flex gap-2 items-center text-lg font-medium"
         htmlFor="published-checkbox"

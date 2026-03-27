@@ -27,7 +27,12 @@ export function ProfileHome() {
       {posts.length > 0 ? (
         posts.map((post) => {
           return (
-            <BlogPostRow key={post.id} onPostDeletion={loadData} post={post} />
+            <BlogPostRow
+              connectedUser={user}
+              key={post.id}
+              onPostDeletion={loadData}
+              post={post}
+            />
           );
         })
       ) : (
