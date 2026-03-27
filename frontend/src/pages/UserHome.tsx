@@ -1,13 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { BlogPostRow } from "../components/BlogPostRow";
 import { useEffect, useState } from "react";
 import { getOneUserPosts } from "../queries";
-import type { BlogPost } from "../types";
+import type { BlogPost, User } from "../types";
 
 export function UserHome() {
   const { id } = useParams();
 
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const { connectedUser } = useOutletContext<{
+    connectedUser: User;
+    user: User;
+  }>();
 
   useEffect(() => {
     if (!id) return;
@@ -30,7 +34,12 @@ export function UserHome() {
         </p>
       ) : (
         posts.map((post) => (
-          <BlogPostRow onPostDeletion={loadPosts} key={post?.id} post={post} />
+          <BlogPostRow
+            connectedUser={connectedUser}
+            onPostDeletion={loadPosts}
+            key={post?.id}
+            post={post}
+          />
         ))
       )}
     </div>

@@ -26,7 +26,9 @@ export function Profile() {
 
   useEffect(() => {
     (async () => {
-      const user = await getConnectedUser();
+      const user = await getConnectedUser(
+        localStorage.getItem("dadinaut_blogging_platform_auth_token"),
+      );
       setUser(user);
     })();
   }, []);

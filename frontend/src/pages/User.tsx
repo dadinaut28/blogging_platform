@@ -12,7 +12,8 @@ export interface userContextType {
 export function User() {
   const { id } = useParams();
   const [user, setUser] = useState<User>();
-  const { onLargeScreen, onSmallScreen } = useOutletContext<contextType>();
+  const { onLargeScreen, onSmallScreen, connectedUser } =
+    useOutletContext<contextType>();
 
   useEffect(() => {
     if (!id) return;
@@ -41,7 +42,7 @@ export function User() {
             A propos
           </Link>
         </div>
-        <Outlet context={{ user }} />
+        <Outlet context={{ user, connectedUser }} />
       </div>
       {!onSmallScreen && (
         <div className="w-1/3 pt-10 px-8 border-l border-gray-100">

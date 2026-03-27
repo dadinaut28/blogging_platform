@@ -128,7 +128,9 @@ export const routes: RouteObject[] = [
         data.post = post;
       }
 
-      const connectedUser = await getConnectedUser();
+      const connectedUser = await getConnectedUser(
+        localStorage.getItem("dadinaut_blogging_platform_auth_token"),
+      );
       data.connectedUser = connectedUser;
 
       return data;
