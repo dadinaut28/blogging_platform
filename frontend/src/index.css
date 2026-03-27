@@ -20,6 +20,36 @@ body {
   font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+@media screen and (min-width: 400px) {
+  .blog-post-row {
+    width: 400px;
+  }
+}
+
+@media screen and (min-width: 492px) {
+  .blog-post-row {
+    width: 450px;
+  }
+}
+
+@media screen and (min-width: 492px) {
+  .blog-post-row {
+    width: 450px;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  .blog-post-row {
+    width: 600px;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  .blog-post-row {
+    width: 400px;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 * {

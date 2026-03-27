@@ -62,7 +62,7 @@ export async function createNewPost(
     const response = await fetch(`${apiUrl}/api/posts`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${localStorage.getItem("dadinaut_blogging_platform_auth_token")}`,
       },
       body,
     });

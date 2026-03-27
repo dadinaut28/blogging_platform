@@ -44,7 +44,7 @@ export function BlogPostRow({ post, onPostDeletion, connectedUser }: Props) {
   };
 
   return (
-    <div className=" py-3 my-4 relative">
+    <div className="py-3 my-4 w-75 relative blog-post-row">
       {showServerErrorMessage && (
         <div className="absolute right-1.5 top-0 bg-red-50 border border-red-400 rounded-md px-1.5 py-1">
           <p className="text-sm text-red-500">
@@ -73,11 +73,11 @@ export function BlogPostRow({ post, onPostDeletion, connectedUser }: Props) {
           </h3>
         </button>
       </div>
-      <div className="flex mt-2.5 gap-2.5">
+      <div className="flex mt-2.5  ">
         <div className="overflow-hidden w-2/3">
           <h2
             onClick={() => navigate(`/posts/${post.id}`)}
-            className="title text-xl line-clamp-3 md:text-2xl font-bold cursor-pointer"
+            className="title text-lg md:text-2xl line-clamp-3 font-bold cursor-pointer"
           >
             {post.title}
           </h2>
@@ -96,9 +96,9 @@ export function BlogPostRow({ post, onPostDeletion, connectedUser }: Props) {
       <div className="flex items-center justify-between sm:w-1/2 mt-2">
         <div className="flex items-center">
           <p className="text-sm text-gray-500">{formattedDate}</p>
-          <Button className="bg-transparent">
+          {/* <Button className="bg-transparent">
             <img className="w-6" src=".././icons/icon-like.png" alt="" />
-          </Button>
+          </Button> */}
           <Button className="bg-transparent ">
             <img
               className="w-6"

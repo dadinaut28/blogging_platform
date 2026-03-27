@@ -63,14 +63,14 @@ function App() {
 
   useEffect(() => {
     const observer = new ResizeObserver(([entry]) => {
-      if (Number(entry.contentRect.width) > 995) {
+      if (Number(entry.contentRect.width) >= 995) {
         setOnLargeScreen(true);
         setHideSideBar(false);
       } else if (entry.contentRect.width < 995) {
         if (onLargeScreen) setHideSideBar(true);
         setOnLargeScreen(false);
       }
-      if (entry.contentRect.width < 855) {
+      if (entry.contentRect.width <= 855) {
         setOnSmallScreen(true);
       } else if (entry.contentRect.width > 855) {
         setOnSmallScreen(false);
@@ -83,7 +83,7 @@ function App() {
     return () => {
       observer.disconnect();
     };
-  }, [hideSideBar, onLargeScreen, onSmallScreen]);
+  }, [onLargeScreen]);
 
   const handleHamburgerClick = () => {
     setHideSideBar((v) => {
@@ -92,7 +92,7 @@ function App() {
   };
 
   return (
-    <div ref={appRef}>
+    <div ref={appRef} className="w-full">
       <NavBar
         onLargeScreen={onLargeScreen}
         onHamburgerClick={handleHamburgerClick}
