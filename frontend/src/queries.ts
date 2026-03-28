@@ -1,7 +1,7 @@
 import type { Category } from "./types";
 
 export const apiUrl = import.meta.env.VITE_API_URL;
-const TOKEN = localStorage.getItem("dadinaut_blogging_platform_auth_token");
+// const TOKEN = localStorage.getItem("dadinaut_blogging_platform_auth_token");
 
 export async function getAllPosts() {
   try {
@@ -122,7 +122,7 @@ export async function createNewResponse(
       method: "POST",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${localStorage.getItem("dadinaut_blogging_platform_auth_token")}`,
       },
       body: JSON.stringify({
         content,
@@ -159,7 +159,7 @@ export async function deleteOnePost(postId: number) {
     const response = await fetch(`${apiUrl}/api/posts/${postId}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${localStorage.getItem("dadinaut_blogging_platform_auth_token")}`,
       },
     });
 
@@ -191,7 +191,7 @@ export async function updatePost(
     const response = await fetch(`${apiUrl}/api/posts/${postId}`, {
       method: "PATCH",
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${localStorage.getItem("dadinaut_blogging_platform_auth_token")}`,
       },
       body,
     });
@@ -209,7 +209,7 @@ export async function deleteOneResponse(responseId: number, postId: number) {
       {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: `Bearer ${localStorage.getItem("dadinaut_blogging_platform_auth_token")}`,
         },
       },
     );
@@ -232,7 +232,7 @@ export async function updateResponse(
         method: "PATCH",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: `Bearer ${localStorage.getItem("dadinaut_blogging_platform_auth_token")}`,
         },
         body: JSON.stringify({
           content: newContent,
