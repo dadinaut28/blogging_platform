@@ -123,7 +123,7 @@ export function ResponseRow({
     <div className="my-6 relative">
       {showDeleteResponseConfirmationBox &&
         createPortal(
-          <div className="fixed bg-gray-50 py-2 px-2.5 rounded-md top-1/2 left-1/2 -translate-1/2 shadow">
+          <div className="fixed w-70 bg-gray-50 pt-2.5 pb-2 px-1 rounded-md top-1/2 left-1/2 -translate-1/2 shadow">
             <p className="text-sm text-red-600 font-medium mt-2">
               Voulez-vous vraiment supprimer votre réponse ?
             </p>
