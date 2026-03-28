@@ -4,6 +4,8 @@ import { Textarea } from "./ui/textarea";
 import { createNewResponse } from "../queries";
 import closeIcon from "../assets/close_icon.svg";
 import type { BlogPost } from "../types";
+import { useNavigate } from "react-router-dom";
+import { isUserConnected } from "../lib/IsUserConnected";
 
 interface Props {
   post: BlogPost;
@@ -16,7 +18,11 @@ export function ResponsesSideBar({
   onCloseButtonClick,
   onNewResponseAdded,
 }: Props) {
-  useEffect(() => console.log(post));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    isUserConnected(navigate);
+  }, [navigate]);
 
   const [showFormButtons, setShowFormButtons] = useState(false);
   const [response, setResponse] = useState("");

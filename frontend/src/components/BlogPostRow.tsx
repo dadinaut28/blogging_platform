@@ -110,7 +110,6 @@ export function BlogPostRow({ post, onPostDeletion, connectedUser }: Props) {
         <Button
           onClick={() => {
             setShowOptionsBox((v) => !v);
-            console.log(connectedUser?.id, post.author.id);
           }}
           className="bg-transparent"
         >
