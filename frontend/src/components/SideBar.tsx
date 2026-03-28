@@ -11,9 +11,12 @@ interface Props {
 export function SideBar({ hideSideBar, onLargeScreen, onUserLogout }: Props) {
   const [showLogoutSuccessMessage, setShowLogoutSuccessMessage] =
     useState(false);
+  const [showLogoutConfirmationBox, setShowLogoutConfirmationBox] =
+    useState(false);
   const navigate = useNavigate();
 
   const handleLogoutButtonClick = () => {
+    setShowLogoutConfirmationBox(false);
     localStorage.removeItem("dadinaut_blogging_platform_auth_token");
     setShowLogoutSuccessMessage(true);
     setTimeout(() => {
@@ -32,6 +35,19 @@ export function SideBar({ hideSideBar, onLargeScreen, onUserLogout }: Props) {
           <p>Vous êtes déconnecté !</p>
         </div>
       )}
+      {showLogoutConfirmationBox && (
+        <div className="fixed top-1/2 left-1/2 w-70 -translate-1/2 bg-gray-100 shadow rounded-md px-2 pt-8 pb-5 ">
+          <p className="text-red-600 text-sm font-medium">
+            Voulez-vous vraiment vous déconnecter ?
+          </p>
+          <div className="flex gap-2 justify-center mt-4">
+            <Button onClick={handleLogoutButtonClick}>Oui</Button>
+            <Button onClick={() => setShowLogoutConfirmationBox(false)}>
+              Non
+            </Button>
+          </div>
+        </div>
+      )}
       <Link className="flex items-center gap-4.5 text-lg text-gray-600" to="/">
         <img className="w-6" src=".././icons/home.png" alt="Icone accueil" />
         <span>Accueil</span>
@@ -45,7 +61,7 @@ export function SideBar({ hideSideBar, onLargeScreen, onUserLogout }: Props) {
       </Link>
       <Button
         className="p-0 inline bg-red-100 text-black text-md"
-        onClick={handleLogoutButtonClick}
+        onClick={() => setShowLogoutConfirmationBox(true)}
       >
         Déconnexion
       </Button>
